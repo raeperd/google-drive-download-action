@@ -1,16 +1,19 @@
 import * as core from '@actions/core'
-import {wait} from './wait'
+import {getOauth2ClientOrError, getOauth2CredentialOrError} from './input'
+import {google} from 'googleapis'
 
 async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
-    core.debug(`Waiting ${ms} milliseconds ...`) // debug is only output if you set the secret `ACTIONS_STEP_DEBUG` to true
+    const {id, secret, redirectUri} = getOauth2ClientOrError()
+    const auth = new google.auth.OAuth2(id, secret, redirectUri)
+    const credential = getOauth2CredentialOrError()
+    auth.setCredentials(credential)
 
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
-
-    core.setOutput('time', new Date().toTimeString())
+    const drive = google.drive({version: 'v3', auth})
+    const response = await drive.files.list({
+      fields: 'nextPageToken, files(id, name)'
+    })
+    core.setOutput('result', response.data.files)
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }

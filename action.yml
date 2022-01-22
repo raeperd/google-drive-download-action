@@ -2,10 +2,18 @@ name: 'Your name here'
 description: 'Provide a description here'
 author: 'Your name or organization here'
 inputs:
-  milliseconds: # change this
+  clientSecret:
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+    description: 'Client secret of oauth2 client application'
+  clientId:
+    required: true
+    description: 'Client id of oauth2 client application'
+  redirectUri:
+    required: true
+    description: 'Redirect uri of oauth2 client application'
+  credential_json:
+    required: true
+    description: 'credential.json with refresh_token and scope https://www.googleapis.com/auth/drive.readonly'
 runs:
   using: 'node12'
   main: 'dist/index.js'
