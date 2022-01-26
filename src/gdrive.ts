@@ -1,5 +1,6 @@
 import {mkdir, writeFile} from 'fs/promises'
 import {drive_v3} from 'googleapis'
+import {info} from '@actions/core'
 import {join} from 'path'
 import Drive = drive_v3.Drive
 
@@ -12,18 +13,16 @@ export async function downloadFile(
     throw Error(`Invalid file ${file}`)
   }
   if (file.mimeType === 'application/vnd.google-apps.folder') {
-    // eslint-disable-next-line no-console
-    console.log(`Starts to download folder ${file.name} in ${path}`)
-    return await downloadFolder(drive, file, path)
+    await downloadFolder(drive, file, path)
+    info(`Downloaded folder ${file.name} in ${path}`)
   }
-  // eslint-disable-next-line no-console
-  console.log(`Starts to download file ${file.name} in ${path}`)
   const {data} = await drive.files.get({
     fileId: file.id,
     alt: 'media'
   })
   try {
-    return await writeFile(join(path, file.name), JSON.stringify(data))
+    await writeFile(join(path, file.name), JSON.stringify(data))
+    info(`Downloaded file ${file.name} in ${path}`)
   } catch (error) {
     throw Error(
       `Failed to writeFile ${file} in path ${join(path, file.name)} \n
