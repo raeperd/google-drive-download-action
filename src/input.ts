@@ -13,6 +13,14 @@ export function getOauth2CredentialOrError(): Oauth2Credential {
   return JSON.parse(credential)
 }
 
+export function getQueryString(): string {
+  return getInputOrError('q')
+}
+
+export function getPath(): string {
+  return getInputOrError('path')
+}
+
 interface Oauth2Client {
   secret: string
   id: string

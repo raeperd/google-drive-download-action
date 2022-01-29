@@ -14,6 +14,12 @@ inputs:
   credential_json:
     required: true
     description: 'credential.json with refresh_token and scope https://www.googleapis.com/auth/drive.readonly'
+  q:
+    required: true
+    description: 'Query string to search for files and folders'
+  path:
+    required: false
+    description: 'Path to download files default to working directory'
 runs:
   using: 'node12'
   main: 'dist/index.js'

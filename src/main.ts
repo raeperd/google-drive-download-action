@@ -1,22 +1,42 @@
-import * as core from '@actions/core'
-import {getOauth2ClientOrError, getOauth2CredentialOrError} from './input'
-import {google} from 'googleapis'
+import {info, setFailed} from '@actions/core'
+import {drive_v3, google} from 'googleapis'
+import {downloadFile} from './gdrive'
+import {
+  getOauth2ClientOrError,
+  getOauth2CredentialOrError,
+  getPath,
+  getQueryString
+} from './input'
 
-async function run(): Promise<void> {
+async function main(): Promise<void> {
   try {
-    const {id, secret, redirectUri} = getOauth2ClientOrError()
-    const auth = new google.auth.OAuth2(id, secret, redirectUri)
-    const credential = getOauth2CredentialOrError()
-    auth.setCredentials(credential)
-
-    const drive = google.drive({version: 'v3', auth})
-    const response = await drive.files.list({
-      fields: 'nextPageToken, files(id, name)'
+    const drive = initializeDrive()
+    const query = getQueryString()
+    const {data} = await drive.files.list({
+      q: query
     })
-    core.setOutput('result', response.data.files)
+    if (!data.files) {
+      setFailed(`No files found using query ${query}`)
+      return
+    }
+    info(`Found files ${data.files} using query ${query}`)
+    const path = getPath()
+    await Promise.all(
+      data.files.map(async file => {
+        await downloadFile(drive, file, path)
+      })
+    )
   } catch (error) {
-    if (error instanceof Error) core.setFailed(error.message)
+    if (error instanceof Error) setFailed(error.message)
   }
 }
 
-run()
+function initializeDrive(): drive_v3.Drive {
+  const {id, secret, redirectUri} = getOauth2ClientOrError()
+  const auth = new google.auth.OAuth2(id, secret, redirectUri)
+  const credential = getOauth2CredentialOrError()
+  auth.setCredentials(credential)
+  return google.drive({version: 'v3', auth})
+}
+
+main()
