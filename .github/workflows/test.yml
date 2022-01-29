@@ -5,6 +5,7 @@ on: # rebuild any PRs and main branch changes
     branches:
       - main
       - 'releases/*'
+      - 'feature/#7-*'
 
 jobs:
   build: # make sure build/ci work properly
@@ -27,3 +28,9 @@ jobs:
           clientId: ${{ secrets.CLIENT_ID }}
           redirectUri: ${{ secrets.REDIRECT_URI }}
           credential_json: ${{ secrets.CREDENTIAL_JSON }}
+          q: "'1U-2NgagKTnqkIZrML52A2SsD9HDDeDN7' in parents"
+          path: "./"
+      - uses: andstor/file-existence-action@v1
+        with:
+          files: "./root.md, ./sub-folder, ./sub-folder/sub.md, ./sub-folder/sub-sub-folder/sub-sub.md"
+          allow_failure: true
