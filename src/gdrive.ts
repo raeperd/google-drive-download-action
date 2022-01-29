@@ -1,4 +1,4 @@
-import {mkdir, writeFile} from 'fs/promises'
+import {promises} from 'fs'
 import {drive_v3} from 'googleapis'
 import {info} from '@actions/core'
 import {join} from 'path'
@@ -21,7 +21,7 @@ export async function downloadFile(
     alt: 'media'
   })
   try {
-    await writeFile(join(path, file.name), JSON.stringify(data))
+    await promises.writeFile(join(path, file.name), JSON.stringify(data))
     info(`Downloaded file ${file.name} in ${path}`)
   } catch (error) {
     throw Error(
@@ -40,7 +40,7 @@ async function downloadFolder(
     throw Error(`Invalid folder without name \n ${folder}`)
   }
   const dirPath = join(path, folder.name)
-  await mkdir(dirPath)
+  await promises.mkdir(dirPath)
   const {data} = await drive.files.list({
     q: `'${folder.id}' in parents`
   })
