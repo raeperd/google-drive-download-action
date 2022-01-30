@@ -1,9 +1,8 @@
 {
-  "name": "typescript-action",
-  "version": "0.0.0",
-  "private": true,
-  "description": "TypeScript template action",
-  "main": "lib/main.js",
+  "name": "google-drive-download-action",
+  "version": "1.0.0",
+  "description": "Github action for downlaoding google drive files or folder using Drives: list API",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
     "format": "prettier --write '**/*.ts'",

@@ -1,6 +1,9 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'google-drive-download-action'
+description: 'Github action for downlaoding google drive files or folder using Drives: list API'
+author: 'raeperd'
+branding:
+  icon: download
+  color: white
 inputs:
   clientSecret:
     required: true
@@ -18,8 +21,8 @@ inputs:
     required: true
     description: 'Query string to search for files and folders'
   path:
-    required: false
+    required: true
     description: 'Path to download files default to working directory'
 runs:
-  using: 'node12'
+  using: 'node16'
   main: 'dist/index.js'
