@@ -1,105 +1,42 @@
-<p align="center">
-  <a href="https://github.com/actions/typescript-action/actions"><img alt="typescript-action status" src="https://github.com/actions/typescript-action/workflows/build-test/badge.svg"></a>
-</p>
+# Google drive download action
 
-# Create a JavaScript Action using TypeScript
+[![.github/workflows/test.yml](https://github.com/raeperd/google-drive-download-action/actions/workflows/test.yml/badge.svg)](https://github.com/raeperd/google-drive-download-action/actions/workflows/test.yml)
 
-Use this template to bootstrap the creation of a TypeScript action.:rocket:
+Github action for downlaoding google drive files or folder using [Drives: list API](https://developers.google.com/drive/api/v3/reference/drives/list)
 
-This template includes compilation support, tests, a validation workflow, publishing, and versioning guidance.  
-
-If you are new, there's also a simpler introduction.  See the [Hello World JavaScript Action](https://github.com/actions/hello-world-javascript-action)
-
-## Create an action from this template
-
-Click the `Use this Template` and provide the new repo details for your action
-
-## Code in Main
-
-> First, you'll need to have a reasonably modern version of `node` handy. This won't work with versions older than 9, for instance.
-
-Install the dependencies  
-```bash
-$ npm install
-```
-
-Build the typescript and package it for distribution
-```bash
-$ npm run build && npm run package
-```
-
-Run the tests :heavy_check_mark:  
-```bash
-$ npm test
-
- PASS  ./index.test.js
-  ✓ throws invalid number (3ms)
-  ✓ wait 500 ms (504ms)
-  ✓ test runs (95ms)
-
-...
-```
-
-## Change action.yml
-
-The action.yml defines the inputs and output for your action.
-
-Update the action.yml with your name, description, inputs and outputs for your action.
-
-See the [documentation](https://help.github.com/en/articles/metadata-syntax-for-github-actions)
-
-## Change the Code
-
-Most toolkit and CI/CD operations involve async operations so the action is run in an async function.
-
-```javascript
-import * as core from '@actions/core';
-...
-
-async function run() {
-  try { 
-      ...
-  } 
-  catch (error) {
-    core.setFailed(error.message);
-  }
-}
-
-run()
-```
-
-See the [toolkit documentation](https://github.com/actions/toolkit/blob/master/README.md#packages) for the various packages.
-
-## Publish to a distribution branch
-
-Actions are run from GitHub repos so we will checkin the packed dist folder. 
-
-Then run [ncc](https://github.com/zeit/ncc) and push the results:
-```bash
-$ npm run package
-$ git add dist
-$ git commit -a -m "prod dependencies"
-$ git push origin releases/v1
-```
-
-Note: We recommend using the `--license` option for ncc, which will create a license file for all of the production node modules used in your project.
-
-Your action is now published! :rocket: 
-
-See the [versioning documentation](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)
-
-## Validate
-
-You can now validate the action by referencing `./` in a workflow in your repo (see [test.yml](.github/workflows/test.yml))
+## Usage
 
 ```yaml
-uses: ./
-with:
-  milliseconds: 1000
+runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: raeperd/raeperd/google-drive-download-action@v1.0
+        with:
+          clientSecret: ${{ secrets.CLIENT_SECRET }}
+          clientId: ${{ secrets.CLIENT_ID }}
+          redirectUri: ${{ secrets.REDIRECT_URI }}
+          credential_json: ${{ secrets.CREDENTIAL_JSON }}
+          q: "'1U-2NgagKTnqkIZrML52A2SsD9HDDeDN7' in parents"
+          path: "./"
 ```
 
-See the [actions tab](https://github.com/actions/typescript-action/actions) for runs of this action! :rocket:
 
-## Usage:
 
-After testing you can [create a v1 tag](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md) to reference the stable and latest V1 action
+## Getting Started
+
+### What you needs
+
+1. Create Google drive application
+2. Oauth2 credentials with refresh token
+
+#### Create Google drive application
+
+- [Enable the Google Drive API  |  Google Developers](https://developers.google.com/drive/api/v3/enable-drive-api)
+  1. Go to the [Google API Console](https://console.developers.google.com/).
+  2. Select a project.
+  3. In the sidebar on the left, expand **APIs & auth** and select **APIs**.
+  4. In the displayed list of available APIs, click the Drive API link and click **Enable API**.
+
+#### Generate Oauth2 Credentials
+
+- Create credential.json using [Node.js quickstart  |  Google Drive API  |  Google Developers](https://developers.google.com/drive/api/v3/quickstart/nodejs)
