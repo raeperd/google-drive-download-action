@@ -1,8 +1,8 @@
 {
   "name": "google-drive-download-action",
   "version": "1.0.0",
-  "description": "Github action for downlaoding google drive files or folder using Drives: list API",
-  "main": "dist/index.js",
+  "description": "Github action for downloading google drive files or folder using Drives: list API",
+  "main": "lib/main.js",
   "scripts": {
     "build": "tsc",
     "format": "prettier --write '**/*.ts'",

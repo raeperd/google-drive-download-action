@@ -19,7 +19,7 @@ async function main(): Promise<void> {
       setFailed(`No files found using query ${query}`)
       return
     }
-    info(`Found files ${data.files} using query ${query}`)
+    info(`${JSON.stringify(data.files, null, 4)}`)
     const path = getPath()
     await Promise.all(
       data.files.map(async file => {

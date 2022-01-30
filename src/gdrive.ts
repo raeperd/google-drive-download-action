@@ -10,7 +10,7 @@ export async function downloadFile(
   path: string
 ): Promise<void> {
   if (file.name == null || file.id == null || file.mimeType == null) {
-    throw Error(`Invalid file ${file}`)
+    throw Error(`Invalid file ${JSON.stringify(file, null, 4)}`)
   }
   if (file.mimeType === 'application/vnd.google-apps.folder') {
     return await downloadFolder(drive, file, path)
@@ -19,16 +19,17 @@ export async function downloadFile(
     fileId: file.id,
     alt: 'media'
   })
+  const pathToWrite = join(path, file.name)
   try {
     await promises.writeFile(
-      join(path, file.name),
+      pathToWrite,
       fileContentsFromData(file.mimeType, data)
     )
-    info(`Downloaded file ${file.name} in ${path}`)
+    info(`Downloaded ${pathToWrite}`)
   } catch (error) {
     throw Error(
-      `Failed to writeFile ${file} in path ${join(path, file.name)} \n
-      ${error}`
+      `Failed to download ${pathToWrite} \n
+      ${JSON.stringify(error, null, 4)}`
     )
   }
 }
