@@ -9,7 +9,7 @@ export async function downloadFile(
   file: drive_v3.Schema$File,
   path: string
 ): Promise<void> {
-  if (file.name == null || file.id == null) {
+  if (file.name == null || file.id == null || file.mimeType == null) {
     throw Error(`Invalid file ${file}`)
   }
   if (file.mimeType === 'application/vnd.google-apps.folder') {
@@ -20,7 +20,10 @@ export async function downloadFile(
     alt: 'media'
   })
   try {
-    await promises.writeFile(join(path, file.name), JSON.stringify(data))
+    await promises.writeFile(
+      join(path, file.name),
+      fileContentsFromData(file.mimeType, data)
+    )
     info(`Downloaded file ${file.name} in ${path}`)
   } catch (error) {
     throw Error(
@@ -53,4 +56,14 @@ async function downloadFolder(
       }
     })
   )
+}
+
+function fileContentsFromData(
+  mimeType: string,
+  data: drive_v3.Schema$File
+): string {
+  if (mimeType === 'application/json') {
+    return JSON.stringify(data)
+  }
+  return data as string
 }
