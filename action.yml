@@ -21,7 +21,8 @@ inputs:
     required: true
     description: 'Query string to search for files and folders'
   path:
-    required: true
+    required: false
+    default: "./"
     description: 'Path to download files default to working directory'
 runs:
   using: 'node16'

@@ -18,7 +18,7 @@ export function getQueryString(): string {
 }
 
 export function getPath(): string {
-  return getInputOrError('path')
+  return getInputOrDefault('path', process.cwd())
 }
 
 interface Oauth2Client {
@@ -36,9 +36,17 @@ interface Oauth2Credential {
 }
 
 function getInputOrError(name: string): string {
-  const input = getInput(name)
+  const input = getInput(name, {required: true})
   if (!input || input.length === 0) {
     throw Error(`${name} must be provided`)
+  }
+  return input
+}
+
+function getInputOrDefault(name: string, defaultValue: string): string {
+  const input = getInput(name)
+  if (!input || input.length === 0) {
+    return defaultValue
   }
   return input
 }
