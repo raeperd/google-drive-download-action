@@ -45,7 +45,7 @@ async function downloadFolder(
   const dirPath = join(path, folder.name)
   await promises.mkdir(dirPath)
   const {data} = await drive.files.list({
-    q: `'${folder.id}' in parents`
+    q: `'${folder.id}' in parents and trashed = false`
   })
   if (!data.files) {
     return
