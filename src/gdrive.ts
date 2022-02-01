@@ -13,7 +13,7 @@ export async function downloadFile(
     throw Error(`Invalid file ${JSON.stringify(file, null, 4)}`)
   }
   if (file.mimeType === 'application/vnd.google-apps.folder') {
-    return await downloadFolder(drive, file, path)
+    return downloadFolder(drive, file, path)
   }
   const {data} = await drive.files.get({
     fileId: file.id,
