@@ -1,7 +1,10 @@
 # Google drive download action
 
 [![.github/workflows/test.yml](https://github.com/raeperd/google-drive-download-action/actions/workflows/test.yml/badge.svg)](https://github.com/raeperd/google-drive-download-action/actions/workflows/test.yml)
-
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=raeperd_google-drive-download-action&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=raeperd_google-drive-download-action)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=raeperd_google-drive-download-action&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=raeperd_google-drive-download-action)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=raeperd_google-drive-download-action&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=raeperd_google-drive-download-action)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=raeperd_google-drive-download-action&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=raeperd_google-drive-download-action)  
 Github action for downlaoding google drive files or folder using [Drives: list API](https://developers.google.com/drive/api/v3/reference/drives/list)
 
 ## Usage
