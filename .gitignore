@@ -100,3 +100,6 @@ lib/**/*
 
 # ignore idea
 .idea
+
+# ignore credential
+oauth2.keys.json

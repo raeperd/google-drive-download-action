@@ -5,7 +5,7 @@
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=raeperd_google-drive-download-action&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=raeperd_google-drive-download-action)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=raeperd_google-drive-download-action&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=raeperd_google-drive-download-action)
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=raeperd_google-drive-download-action&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=raeperd_google-drive-download-action)  
-Github action for downlaoding google drive files or folder using [Drives: list API](https://developers.google.com/drive/api/v3/reference/drives/list)
+Github action for downloading google-drive files or folder using [Drives: list API](https://developers.google.com/drive/api/v3/reference/drives/list)
 
 ## Usage
 
@@ -15,8 +15,8 @@ runs-on: ubuntu-latest
       - uses: actions/checkout@v2
       - uses: raeperd/raeperd/google-drive-download-action@v1.0
         with:
-          clientSecret: ${{ secrets.CLIENT_SECRET }}
           clientId: ${{ secrets.CLIENT_ID }}
+          clientSecret: ${{ secrets.CLIENT_SECRET }}
           redirectUri: ${{ secrets.REDIRECT_URI }}
           credential_json: ${{ secrets.CREDENTIAL_JSON }}
           q: "'1U-2NgagKTnqkIZrML52A2SsD9HDDeDN7' in parents"
@@ -26,20 +26,35 @@ runs-on: ubuntu-latest
 
 
 ## Getting Started
+Before we start, we need Google Drive Application Project and `credential.json`
 
-### What you needs
+### Create Google Drive Application Project
+1. [Create a Google Cloud project](https://developers.google.com/workspace/guides/create-project)
+2. [Setup Google API Oauth2 prerequisites](https://developers.google.com/identity/protocols/oauth2/web-server#prerequisites)
+   - After creating your credentials, download the `client_secret.json` file from the API Console.
+3. [Enable the Google Drive API](https://developers.google.com/drive/api/v3/enable-drive-api)
 
-1. Create Google drive application
-2. Oauth2 credentials with refresh token
+### Create `credential.json`
+- Create `credential.json` using [Node.js quickstart | Google Drive API](https://developers.google.com/drive/api/v3/quickstart/nodejs)  
+- Or you can create `credential.json` using [ts-node - npm](https://www.npmjs.com/package/ts-node)
+  1. Clone this repository, and install dependencies
+  2. Move your `client_secret.json` file into repository directory with name `oauth.keys.json`
+  3. ```shell
+     ts-node write-credential.ts
+     ```
+  
+❗❗ **NEVER INCLUDE YOUR CLIENT SECRET (`oauth.keys.json`) IN VERSION CONTROL** ❗❗ 
 
-#### Create Google drive application
+### Setting up repository secret
+To run this action, we need 4 repository secret parameter
 
-- [Enable the Google Drive API  |  Google Developers](https://developers.google.com/drive/api/v3/enable-drive-api)
-  1. Go to the [Google API Console](https://console.developers.google.com/).
-  2. Select a project.
-  3. In the sidebar on the left, expand **APIs & auth** and select **APIs**.
-  4. In the displayed list of available APIs, click the Drive API link and click **Enable API**.
+1. clientId
+2. clientSecret 
+3. redirectUri 
+4. credential_json
 
-#### Generate Oauth2 Credentials
-
-- Create credential.json using [Node.js quickstart  |  Google Drive API  |  Google Developers](https://developers.google.com/drive/api/v3/quickstart/nodejs)
+- First 3 parameters can be obtained by `client_secret.json` (or `oauth.keys.json`)
+- credential_json is contents of file `credential.json` created by you
+  - This value is parsed by action, using `JSON.parse()` function. 
+  - Check out [/src/input.ts](./src/input.ts) for more detail
+  
