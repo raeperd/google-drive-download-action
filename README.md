@@ -57,7 +57,10 @@ To run this action, we need 4 repository secret parameter
 - credential_json is contents of file `credential.json` created by you
   - This value is parsed by action, using `JSON.parse()` function. 
   - Check out [/src/input.ts](./src/input.ts) for more detail
-  
+
+# License 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 # Contacts
 raeperd117@gmail.com
 
