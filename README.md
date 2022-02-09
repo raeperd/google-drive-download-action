@@ -58,3 +58,6 @@ To run this action, we need 4 repository secret parameter
   - This value is parsed by action, using `JSON.parse()` function. 
   - Check out [/src/input.ts](./src/input.ts) for more detail
   
+# Contacts
+raeperd117@gmail.com
+
