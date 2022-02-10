@@ -58,6 +58,15 @@ To run this action, we need 4 repository secret parameter
   - This value is parsed by action, using `JSON.parse()` function. 
   - Check out [/src/input.ts](./src/input.ts) for more detail
 
+## How to debug google drive api query
+Use [debug.ts](./debug.ts) file in this repo
+
+1. Define constants `CLIENT_ID`, `CLIENT_SECRET`, `REDIRECT_URI`, `CREDENTIAL_JSON`
+2. Define constants `query` inside `main()` function
+3. Run `ts-node ./debug.ts` and checkout results
+
+❗❗ **NEVER INCLUDE YOUR CHANGES OF `debug.ts` IN VERSION CONTROL ❗❗
+
 # License 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
