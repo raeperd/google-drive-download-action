@@ -1,10 +1,30 @@
+import {info, setFailed} from '@actions/core'
 import {promises} from 'fs'
 import {drive_v3} from 'googleapis'
-import {info} from '@actions/core'
 import {join} from 'path'
 import Drive = drive_v3.Drive
 
-export async function downloadFile(
+export async function downloadFileByQuery(
+  drive: Drive,
+  query: string,
+  path: string
+): Promise<void> {
+  const {data} = await drive.files.list({
+    q: query
+  })
+  if (!data.files) {
+    setFailed(`No files found using query ${query}`)
+    return
+  }
+  info(`${JSON.stringify(data.files, null, 4)}`)
+  await Promise.all(
+    data.files.map(async file => {
+      await downloadFile(drive, file, path)
+    })
+  )
+}
+
+async function downloadFile(
   drive: Drive,
   file: drive_v3.Schema$File,
   path: string
