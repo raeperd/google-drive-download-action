@@ -103,3 +103,6 @@ lib/**/*
 
 # ignore credential
 oauth2.keys.json
+credential.json
+debug.ts
+write-credential.ts

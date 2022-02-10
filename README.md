@@ -23,6 +23,19 @@ runs-on: ubuntu-latest
           path: "./"
 ```
 
+- `clientId` (required) 
+  - Client id of oauth2 client application
+- `clientSecret` (required)
+  - Client secret of oauth2 client application
+- `redirectUri` (required) 
+  - Redirect uri of oauth2 client application
+- `credential_json` (required)
+  - credential.json value with refresh_token with scope `https://www.googleapis.com/auth/drive.readonly`
+- `q` (required)
+  - Query string to search for files and folders 
+- `path` (optional)
+  - Path to download files default to working directory
+  - Default to `./`
 
 
 ## Getting Started
@@ -43,7 +56,7 @@ Before we start, we need Google Drive Application Project and `credential.json`
      ts-node write-credential.ts
      ```
   
-❗❗ **NEVER INCLUDE YOUR CLIENT SECRET (`oauth.keys.json`) IN VERSION CONTROL** ❗❗ 
+❗❗ **NEVER INCLUDE YOUR CLIENT SECRET (`oauth.keys.json` and `credential.json`) IN VERSION CONTROL** ❗❗ 
 
 ### Setting up repository secret
 To run this action, we need 4 repository secret parameter
