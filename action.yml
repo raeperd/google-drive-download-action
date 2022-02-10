@@ -5,12 +5,12 @@ branding:
   icon: download
   color: white
 inputs:
-  clientSecret:
-    required: true
-    description: 'Client secret of oauth2 client application'
   clientId:
     required: true
     description: 'Client id of oauth2 client application'
+  clientSecret:
+    required: true
+    description: 'Client secret of oauth2 client application'
   redirectUri:
     required: true
     description: 'Redirect uri of oauth2 client application'

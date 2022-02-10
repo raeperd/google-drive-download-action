@@ -1,6 +1,6 @@
-import {info, setFailed} from '@actions/core'
+import {setFailed} from '@actions/core'
 import {drive_v3, google} from 'googleapis'
-import {downloadFile} from './gdrive'
+import {downloadFileByQuery} from './gdrive'
 import {
   getOauth2ClientOrError,
   getOauth2CredentialOrError,
@@ -12,20 +12,8 @@ async function main(): Promise<void> {
   try {
     const drive = initializeDrive()
     const query = getQueryString()
-    const {data} = await drive.files.list({
-      q: query
-    })
-    if (!data.files) {
-      setFailed(`No files found using query ${query}`)
-      return
-    }
-    info(`${JSON.stringify(data.files, null, 4)}`)
     const path = getPath()
-    await Promise.all(
-      data.files.map(async file => {
-        await downloadFile(drive, file, path)
-      })
-    )
+    await downloadFileByQuery(drive, query, path)
   } catch (error) {
     if (error instanceof Error) setFailed(error.message)
   }
