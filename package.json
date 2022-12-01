@@ -25,7 +25,7 @@
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.6.0",
-    "googleapis": "^92.0.0"
+    "googleapis": "^109.0.1"
   },
   "devDependencies": {
     "@google-cloud/local-auth": "^1.0.1",
