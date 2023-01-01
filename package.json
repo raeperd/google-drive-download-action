@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     "@google-cloud/local-auth": "^1.0.1",
-    "@types/node": "^16.10.5",
+    "@types/node": "^18.11.18",
     "@typescript-eslint/parser": "^5.8.1",
     "@vercel/ncc": "^0.31.1",
     "eslint": "^7.32.0",
